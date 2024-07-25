@@ -1,0 +1,24 @@
+services:
+  ksml-patient-producer:
+    image: axual/ksml:latest
+    hostname: kafka-data-generator
+    restart: always
+    networks:
+      - kafka_brokers_network
+      - kafka_controller_network
+      - apps_network
+    working_dir: /ksml
+    command:
+      - run sudo pip install names
+      - /ksml/ksml-patient-generator.yaml
+    volumes:
+      - ./:/ksml
+      - ./certs/:/certs/
+
+networks:
+  kafka_brokers_network:
+    external: true
+  kafka_controller_network:
+    external: true
+  apps_network:
+    external: true
